@@ -11,7 +11,7 @@ from sklearn.decomposition import PCA
 # 1. Chargement et aperçu du dataset
 # -------------------------------
 # Remplacer le chemin si nécessaire
-data_path = 'C:/Users/alex2/OneDrive/Documents/GitHub/DataManagerUE3_ALCOPI/Analysis/combined_data.csv'
+data_path = 'data/combined_data.csv'
 df = pd.read_csv(data_path)
 
 print("Aperçu du dataset :")
@@ -54,6 +54,7 @@ plt.ylabel("Nombre d'échantillons")
 plt.title("Distribution des espèces")
 plt.xticks(rotation=45)
 plt.tight_layout()
+plt.savefig('distribution_especes.png')
 plt.show()
 
 # 3.2 Tracé de quelques courbes spectrales individuelles
@@ -72,6 +73,7 @@ plt.legend()
 step = 10 if len(spectral_columns) > 10 else 1
 plt.xticks(ticks=np.arange(0, len(spectral_columns), step), labels=np.array(spectral_columns)[::step], rotation=45)
 plt.tight_layout()
+plt.savefig('courbes_spectrales_individuelles.png')
 plt.show()
 
 # 3.3 Courbes moyennes par espèce avec intervalle de confiance (moyenne ± écart-type)
@@ -92,6 +94,7 @@ plt.legend()
 # Affichage des x-ticks avec un pas adapté
 plt.xticks(ticks=np.arange(0, len(spectral_columns), step), labels=np.array(spectral_columns)[::step], rotation=45)
 plt.tight_layout()
+plt.savefig('courbes_moyennes_especes.png')
 plt.show()
 
 # 3.4 Calcul et tracé de la première dérivée des courbes moyennes par espèce
@@ -115,6 +118,7 @@ plt.legend()
 # Affichage des x-ticks avec un pas adapté
 plt.xticks(ticks=np.arange(0, len(spectral_columns), step), labels=np.array(spectral_columns)[::step], rotation=45)
 plt.tight_layout()
+plt.savefig('derivee_courbes_moyennes.png')
 plt.show()
 
 # -------------------------------
@@ -141,6 +145,7 @@ plt.ylabel("PC2")
 plt.title("Projection PCA des données spectrales")
 plt.legend()
 plt.tight_layout()
+plt.savefig('projection_pca.png')
 plt.show()
 
 # -------------------------------
@@ -155,4 +160,5 @@ plt.title("Matrice de corrélation des bandes spectrales")
 plt.xticks(ticks=np.arange(0, len(spectral_columns), step), labels=np.array(spectral_columns)[::step], rotation=90)
 plt.yticks(ticks=np.arange(0, len(spectral_columns), step), labels=np.array(spectral_columns)[::step])
 plt.tight_layout()
+plt.savefig('matrice_correlation.png')
 plt.show()

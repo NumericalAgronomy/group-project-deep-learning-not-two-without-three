@@ -16,16 +16,15 @@ from imblearn.over_sampling import RandomOverSampler
 # 1. Chargement et préparation des données
 # ================================
 
-data_src = r'Data\combined_data.csv'
+data_src = 'data/combined_data.csv'
 data = pd.read_csv(data_src)
 
 # On considère que la dernière colonne est la cible
 target_col = data.columns[-1]
 
-# Encodage de la cible si nécessaire
-if data[target_col].dtype == 'object':
-    le = LabelEncoder()
-    data[target_col] = le.fit_transform(data[target_col])
+# Encodage de la cible
+le = LabelEncoder()
+data[target_col] = le.fit_transform(data[target_col])
 
 # Création du jeu de validation : 6 individus par espèce
 validation_frames = []
@@ -87,6 +86,7 @@ plt.ylabel("Nombre d'échantillons")
 plt.title("Histogramme : Effectifs par espèce (Validation + Training + Oversampling)")
 plt.legend()
 plt.tight_layout()
+plt.savefig('histogramme_effectifs.png')
 plt.show()
 
 # ================================
@@ -130,7 +130,7 @@ learning_rate = 0.001
 # Utilisation de .values pour convertir les DataFrame en array NumPy.
 # On ajoute .unsqueeze(1) pour obtenir un tenseur de forme (n_samples, 1, n_features)
 X_train_tensor = torch.tensor(X_train_over.values, dtype=torch.float32).unsqueeze(1)
-y_train_tensor = torch.tensor(np.array(y_train_over), dtype=torch.long)
+y_train_tensor = torch.tensor(y_train_over.astype(int), dtype=torch.long)
 
 X_val_tensor = torch.tensor(X_val.values, dtype=torch.float32).unsqueeze(1)
 y_val_tensor = torch.tensor(y_val.values, dtype=torch.long)
@@ -190,6 +190,7 @@ plt.ylabel('Loss')
 plt.title("Évolution de la loss")
 plt.legend()
 plt.tight_layout()
+plt.savefig('evolution_loss.png')
 plt.show()
 
 # Évaluation sur le jeu de validation
@@ -208,5 +209,6 @@ plt.title("Matrice de confusion (Validation Simple)")
 plt.xlabel("Prédictions")
 plt.ylabel("Véritables")
 plt.tight_layout()
+plt.savefig('matrice_confusion.png')
 plt.show()
 print("Score de Validation Simple :", accuracy_score(y_val, y_pred))
